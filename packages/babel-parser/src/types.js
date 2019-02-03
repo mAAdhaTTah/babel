@@ -568,6 +568,10 @@ export type SequenceExpression = NodeBase & {
 
 // Pipelines
 
+export type PipelineHead = NodeBase & {
+  type: "PipelineHead",
+};
+
 export type PipelineBody = NodeBase & {
   type: "PipelineBody",
 };
