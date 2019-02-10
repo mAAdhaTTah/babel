@@ -47,6 +47,9 @@ export default class State {
   // Used to signify the start of a potential arrow function
   potentialArrowAt: number = -1;
 
+  // Used to signifiy a potential solo await in a pipeline
+  potentialSoloAwaitAt: number = -1;
+
   // Used to signify the start of an expression which looks like a
   // typed arrow function, but it isn't
   // e.g. a ? (b) : c => d

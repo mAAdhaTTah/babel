@@ -329,6 +329,7 @@ export default class ExpressionParser extends LValParser {
             this.getPluginOption("pipelineOperator", "proposal") === "fsharp" &&
             !wasInPipeline
           ) {
+            this.state.potentialArrowAt = this.state.start;
             node.left = this.makePipelineHead(left);
           }
         } else if (op === tt.nullishCoalescing) {
@@ -2299,13 +2300,18 @@ export default class ExpressionParser extends LValParser {
     const startLoc = this.state.startLoc;
 
     const node = this.startNodeAt(this.state.start, this.state.startLoc);
-    node.body = this.parseExprOp(
-      this.parseMaybeUnary(),
-      startPos,
-      startLoc,
-      op.rightAssociative ? prec - 1 : prec,
-      noIn,
-    );
+
+    if (this.lookahead().type === tt.arrow) {
+      console.log("MATCH ARROW");
+    } else {
+      node.body = this.parseExprOp(
+        this.parseMaybeUnary(),
+        startPos,
+        startLoc,
+        op.rightAssociative ? prec - 1 : prec,
+        noIn,
+      );
+    }
 
     return this.finishNode(node, "PipelineBody");
   }
